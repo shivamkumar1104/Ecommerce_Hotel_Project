@@ -1,0 +1,95 @@
+import React, { useState } from 'react';
+import { AMENITIES_DATA } from '../data/hotelData';
+import { Sparkles, ArrowRight, Compass } from 'lucide-react';
+
+export default function Amenities({ onOpenInquiry }) {
+  const [selectedAmenity, setSelectedAmenity] = useState(AMENITIES_DATA[0]);
+
+  return (
+    <section id="amenities" className="py-24 px-4 sm:px-6 lg:px-8 bg-hotel-cream relative">
+      <div className="max-w-7xl mx-auto">
+        
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 text-hotel-gold-dark text-xs uppercase tracking-[0.3em] font-medium mb-2">
+            <Sparkles className="w-4 h-4 text-hotel-emerald" /> Unparalleled Experiences
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-serif text-hotel-emerald-dark font-normal mb-4">
+            Resort Amenities & VIP Privileges
+          </h2>
+          <p className="text-gray-600 text-sm font-light leading-relaxed">
+            Every moment at Equalirio is designed for deep relaxation, refined dining, and seamless travel luxury.
+          </p>
+        </div>
+
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          {/* Amenities Selector Buttons */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            {AMENITIES_DATA.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setSelectedAmenity(item)}
+                className={`p-6 rounded-2xl text-left transition-all duration-300 border ${
+                  selectedAmenity.id === item.id
+                    ? 'bg-hotel-emerald text-white border-hotel-gold shadow-luxury scale-[1.02]'
+                    : 'bg-white text-gray-800 border-gray-200 hover:border-hotel-gold/50 hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`text-[10px] uppercase font-bold tracking-widest px-2.5 py-0.5 rounded-full ${
+                    selectedAmenity.id === item.id ? 'bg-hotel-gold text-hotel-emerald-dark' : 'bg-gray-100 text-gray-600'
+                  }`}>
+                    {item.category}
+                  </span>
+                  <Compass className={`w-4 h-4 ${selectedAmenity.id === item.id ? 'text-hotel-gold' : 'text-gray-400'}`} />
+                </div>
+                
+                <h3 className="font-serif text-2xl font-normal mb-1">
+                  {item.title}
+                </h3>
+                <p className={`text-xs line-clamp-2 font-light ${selectedAmenity.id === item.id ? 'text-gray-200' : 'text-gray-500'}`}>
+                  {item.description}
+                </p>
+              </button>
+            ))}
+          </div>
+
+          {/* Featured Showcase Card */}
+          <div className="lg:col-span-7">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
+              <img
+                src={selectedAmenity.image}
+                alt={selectedAmenity.title}
+                className="w-full h-[480px] object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-hotel-emerald-dark via-hotel-emerald-dark/40 to-transparent"></div>
+
+              <div className="absolute bottom-0 inset-x-0 p-8 sm:p-10 text-white">
+                <span className="text-xs uppercase tracking-widest text-hotel-gold font-bold mb-2 block">
+                  Featured Experience
+                </span>
+                <h3 className="font-serif text-3xl sm:text-4xl font-normal text-white mb-3">
+                  {selectedAmenity.title}
+                </h3>
+                <p className="text-gray-200 text-sm font-light max-w-xl leading-relaxed mb-6">
+                  {selectedAmenity.description}
+                </p>
+
+                <button
+                  onClick={() => onOpenInquiry(selectedAmenity.title)}
+                  className="inline-flex items-center gap-2 bg-hotel-gold hover:bg-hotel-gold-light text-hotel-emerald-dark font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-full shadow-gold transition-all"
+                >
+                  <span>Reserve Experience</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  );
+}
