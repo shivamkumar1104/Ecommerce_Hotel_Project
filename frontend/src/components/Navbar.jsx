@@ -7,13 +7,13 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
 
-  const currencies = [
-    { code: 'IND', symbol: '₹', label: 'IND (₹)' },
-    { code: 'USD', symbol: '$', label: 'USD ($)' },
-    { code: 'EUR', symbol: '€', label: 'EUR (€)' },
-    { code: 'GBP', symbol: '£', label: 'GBP (£)' },
-    { code: 'JPY', symbol: '¥', label: 'JPY (¥)' },
-  ];
+  // const currencies = [
+  //   { code: 'IND', symbol: '₹', label: 'IND (₹)' },
+  //   { code: 'USD', symbol: '$', label: 'USD ($)' },
+  //   { code: 'EUR', symbol: '€', label: 'EUR (€)' },
+  //   { code: 'GBP', symbol: '£', label: 'GBP (£)' },
+  //   { code: 'JPY', symbol: '¥', label: 'JPY (¥)' },
+  // ];
 
   const languages = [
     { code: 'en', label: 'English', native: 'English' },
@@ -26,7 +26,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
   ];
 
   const [currentLang, setCurrentLang] = useState('en');
-  const [dropdownTab, setDropdownTab] = useState('currency'); // 'currency' | 'language'
+  // const [dropdownTab, setDropdownTab] = useState('currency'); // 'currency' | 'language'
 
   useEffect(() => {
     // Read persisted Google Translate language if set
@@ -118,23 +118,23 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
             
             {/* Currency & Language Selector */}
             <div className="relative">
-              <button
+              {/* <button
                 onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
                 className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-hotel-gold px-3 py-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
                 title="Select Currency & Language"
-              >
-                <Globe className="w-3.5 h-3.5 text-hotel-gold" />
+              > */}
+                {/* <Globe className="w-3.5 h-3.5 text-hotel-gold" />
                 <span className="font-semibold">{currency}</span>
                 <span className="text-[10px] opacity-40">•</span>
                 <span className="uppercase text-[11px] font-mono text-hotel-gold">{currentLang}</span>
                 <ChevronDown className="w-3 h-3 opacity-60" />
-              </button>
-
+              </button> */}
+{/* 
               {currencyDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-52 bg-hotel-emerald-dark border border-hotel-gold/30 rounded-2xl shadow-2xl overflow-hidden z-50 animate-fade-in text-white">
                   {/* Tabs Header */}
-                  <div className="grid grid-cols-2 p-1.5 bg-black/40 border-b border-white/10 text-xs">
-                    <button
+                  {/* <div className="grid grid-cols-2 p-1.5 bg-black/40 border-b border-white/10 text-xs"> */}
+                    {/* <button
                       onClick={() => setDropdownTab('currency')}
                       className={`py-1.5 rounded-lg font-semibold tracking-wider text-[11px] transition-colors ${
                         dropdownTab === 'currency'
@@ -143,7 +143,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                       }`}
                     >
                       Currency
-                    </button>
+                    </button> */}
                     <button
                       onClick={() => setDropdownTab('language')}
                       className={`py-1.5 rounded-lg font-semibold tracking-wider text-[11px] transition-colors ${
@@ -157,7 +157,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                   </div>
 
                   {/* Tab 1: Currency */}
-                  {dropdownTab === 'currency' && (
+                  {/* {dropdownTab === 'currency' && (
                     <div className="p-1.5 max-h-56 overflow-y-auto">
                       {currencies.map((c) => (
                         <button
@@ -177,7 +177,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                         </button>
                       ))}
                     </div>
-                  )}
+                  )} */}
 
                   {/* Tab 2: Language */}
                   {dropdownTab === 'language' && (
@@ -205,7 +205,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                     </div>
                   )}
                 </div>
-              )}
+              
             </div>
 
             {/* Quick Phone Call Link */}
