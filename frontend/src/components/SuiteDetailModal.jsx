@@ -34,12 +34,12 @@ export default function SuiteDetailModal({ suite, onClose, onBookNow, currency }
         <div className="grid grid-cols-1 lg:grid-cols-12">
           
           {/* Gallery Column */}
-          <div className="lg:col-span-7 bg-black flex flex-col">
-            <div className="relative h-72 sm:h-96 w-full">
+          <div className="lg:col-span-7 bg-black flex flex-col h-full">
+            <div className="relative aspect-video lg:aspect-auto lg:h-full w-full">
               <img
                 src={images[activeImgIndex]}
                 alt={suite.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center"
               />
               <div className="absolute top-4 left-4 bg-hotel-gold text-hotel-emerald-dark text-[10px] uppercase font-bold tracking-widest px-3 py-1 rounded-full">
                 {suite.tag}
