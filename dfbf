@@ -1,0 +1,12 @@
+express
+mongodb
+mongoose
+dotenv
+cors
+helmet
+bcryptjs
+jsonwebtoken
+cookie-parser
+express-rate-limit
+express-validator
+    
