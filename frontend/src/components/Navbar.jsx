@@ -8,12 +8,53 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
 
   const currencies = [
+    { code: 'IND', symbol: '₹', label: 'IND (₹)' },
     { code: 'USD', symbol: '$', label: 'USD ($)' },
     { code: 'EUR', symbol: '€', label: 'EUR (€)' },
     { code: 'GBP', symbol: '£', label: 'GBP (£)' },
     { code: 'JPY', symbol: '¥', label: 'JPY (¥)' },
-    {code: 'IND', }
   ];
+
+  const languages = [
+    { code: 'en', label: 'English', native: 'English' },
+    { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
+    { code: 'es', label: 'Spanish', native: 'Español' },
+    { code: 'fr', label: 'French', native: 'Français' },
+    { code: 'de', label: 'German', native: 'Deutsch' },
+    { code: 'ja', label: 'Japanese', native: '日本語' },
+    { code: 'ar', label: 'Arabic', native: 'العربية' }
+  ];
+
+  const [currentLang, setCurrentLang] = useState('en');
+  const [dropdownTab, setDropdownTab] = useState('currency'); // 'currency' | 'language'
+
+  useEffect(() => {
+    // Read persisted Google Translate language if set
+    const match = document.cookie.match(/googtrans=\/en\/([a-zA-Z\-]+)/);
+    if (match && match[1]) {
+      setCurrentLang(match[1]);
+    }
+  }, []);
+
+  const handleLanguageChange = (langCode) => {
+    setCurrentLang(langCode);
+
+    // 1. Set Google Translate cookies
+    document.cookie = `googtrans=/en/${langCode}; path=/;`;
+    if (window.location.hostname) {
+      document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname};`;
+    }
+
+    // 2. Trigger Google Translate combo box if present
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+      select.value = langCode;
+      select.dispatchEvent(new Event('change'));
+    } else {
+      // Fallback reload so Google Translate applies cookie on start
+      window.location.reload();
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,36 +116,94 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
           {/* Right Actions: Currency Selector, Contact & CTA */}
           <div className="hidden sm:flex items-center gap-4">
             
-            {/* Currency Selector */}
+            {/* Currency & Language Selector */}
             <div className="relative">
               <button
                 onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
-                className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-hotel-gold px-2.5 py-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
+                className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-hotel-gold px-3 py-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
+                title="Select Currency & Language"
               >
                 <Globe className="w-3.5 h-3.5 text-hotel-gold" />
-                <span>{currency}</span>
+                <span className="font-semibold">{currency}</span>
+                <span className="text-[10px] opacity-40">•</span>
+                <span className="uppercase text-[11px] font-mono text-hotel-gold">{currentLang}</span>
                 <ChevronDown className="w-3 h-3 opacity-60" />
               </button>
 
               {currencyDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-32 bg-hotel-emerald-dark border border-hotel-gold/30 rounded-lg shadow-2xl py-1 z-50 animate-fade-in">
-                  {currencies.map((c) => (
+                <div className="absolute right-0 mt-2 w-52 bg-hotel-emerald-dark border border-hotel-gold/30 rounded-2xl shadow-2xl overflow-hidden z-50 animate-fade-in text-white">
+                  {/* Tabs Header */}
+                  <div className="grid grid-cols-2 p-1.5 bg-black/40 border-b border-white/10 text-xs">
                     <button
-                      key={c.code}
-                      onClick={() => {
-                        setCurrency(c.code);
-                        setCurrencyDropdownOpen(false);
-                      }}
-                      className={`w-full text-left px-3 py-1.5 text-xs flex items-center justify-between ${
-                        currency === c.code
-                          ? 'bg-hotel-gold/20 text-hotel-gold font-medium'
-                          : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                      onClick={() => setDropdownTab('currency')}
+                      className={`py-1.5 rounded-lg font-semibold tracking-wider text-[11px] transition-colors ${
+                        dropdownTab === 'currency'
+                          ? 'bg-hotel-gold text-hotel-emerald-dark shadow font-bold'
+                          : 'text-gray-400 hover:text-white'
                       }`}
                     >
-                      <span>{c.label}</span>
-                      {currency === c.code && <span className="w-1.5 h-1.5 rounded-full bg-hotel-gold"></span>}
+                      Currency
                     </button>
-                  ))}
+                    <button
+                      onClick={() => setDropdownTab('language')}
+                      className={`py-1.5 rounded-lg font-semibold tracking-wider text-[11px] transition-colors ${
+                        dropdownTab === 'language'
+                          ? 'bg-hotel-gold text-hotel-emerald-dark shadow font-bold'
+                          : 'text-gray-400 hover:text-white'
+                      }`}
+                    >
+                      Language
+                    </button>
+                  </div>
+
+                  {/* Tab 1: Currency */}
+                  {dropdownTab === 'currency' && (
+                    <div className="p-1.5 max-h-56 overflow-y-auto">
+                      {currencies.map((c) => (
+                        <button
+                          key={c.code}
+                          onClick={() => {
+                            setCurrency(c.code);
+                            setCurrencyDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-colors ${
+                            currency === c.code
+                              ? 'bg-hotel-gold/20 text-hotel-gold font-bold'
+                              : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                          }`}
+                        >
+                          <span>{c.label}</span>
+                          {currency === c.code && <span className="w-1.5 h-1.5 rounded-full bg-hotel-gold"></span>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Tab 2: Language */}
+                  {dropdownTab === 'language' && (
+                    <div className="p-1.5 max-h-56 overflow-y-auto">
+                      {languages.map((l) => (
+                        <button
+                          key={l.code}
+                          onClick={() => {
+                            handleLanguageChange(l.code);
+                            setCurrencyDropdownOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-colors ${
+                            currentLang === l.code
+                              ? 'bg-hotel-gold/20 text-hotel-gold font-bold'
+                              : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                          }`}
+                        >
+                          <div className="flex flex-col">
+                            <span className="font-medium">{l.native}</span>
+                            <span className="text-[10px] text-gray-400">{l.label}</span>
+                          </div>
+                          {currentLang === l.code && <span className="w-1.5 h-1.5 rounded-full bg-hotel-gold"></span>}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>

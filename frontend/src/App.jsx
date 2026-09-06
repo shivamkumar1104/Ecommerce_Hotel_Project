@@ -34,7 +34,7 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   // Global States
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('IND');
   const [toastMessage, setToastMessage] = useState(null);
 
   // Booking Modal State

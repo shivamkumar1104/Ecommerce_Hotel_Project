@@ -12,7 +12,8 @@ export default function SuiteDetailModal({ suite, onClose, onBookNow, currency }
     USD: { symbol: '$', rate: 1 },
     EUR: { symbol: '€', rate: 0.92 },
     GBP: { symbol: '£', rate: 0.78 },
-    JPY: { symbol: '¥', rate: 155.0 }
+    JPY: { symbol: '¥', rate: 155.0 },
+    IND: { symbol: '₹', rate: 85 }
   };
   const curr = currencyRates[currency] || currencyRates.USD;
   const formattedPrice = `${curr.symbol}${Math.round(suite.price * curr.rate).toLocaleString()}`;
