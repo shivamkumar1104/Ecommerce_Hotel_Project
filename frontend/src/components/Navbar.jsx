@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { HOTEL_INFO } from '../data/hotelData';
-import { Phone, Calendar, Globe, Menu, X, Sparkles, ChevronDown } from 'lucide-react';
+import { Phone, Calendar, Globe, Menu, X, Sparkles, ChevronDown, User, LogOut } from 'lucide-react';
 
-export default function Navbar({ onOpenBooking, currency, setCurrency }) {
+export default function Navbar({ onOpenBooking, currency, setCurrency, user, onOpenAuth, onLogout }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
@@ -12,6 +12,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency }) {
     { code: 'EUR', symbol: '€', label: 'EUR (€)' },
     { code: 'GBP', symbol: '£', label: 'GBP (£)' },
     { code: 'JPY', symbol: '¥', label: 'JPY (¥)' },
+    {code: 'IND', }
   ];
 
   useEffect(() => {
@@ -126,6 +127,33 @@ export default function Navbar({ onOpenBooking, currency, setCurrency }) {
               <Calendar className="w-3.5 h-3.5" />
               <span>Reserve Suite</span>
             </button>
+
+            {/* Auth Profile / Sign In */}
+            {user ? (
+              <div className="flex items-center gap-2 pl-2 border-l border-white/15">
+                <div className="flex items-center gap-2 text-xs text-hotel-gold bg-white/10 px-3 py-1.5 rounded-full border border-hotel-gold/30">
+                  <div className="w-5 h-5 rounded-full bg-hotel-gold text-hotel-emerald-dark font-bold text-[10px] flex items-center justify-center">
+                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                  </div>
+                  <span className="font-serif tracking-wider max-w-[80px] truncate">{user.name.split(' ')[0]}</span>
+                </div>
+                <button
+                  onClick={onLogout}
+                  className="p-1.5 text-gray-400 hover:text-red-400 transition-colors"
+                  title="Sign Out"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={onOpenAuth}
+                className="flex items-center gap-1.5 text-xs text-gray-200 hover:text-hotel-gold px-3.5 py-2 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
+              >
+                <User className="w-3.5 h-3.5 text-hotel-gold" />
+                <span className="font-serif tracking-wider uppercase text-[11px]">Sign In</span>
+              </button>
+            )}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -183,6 +211,41 @@ export default function Navbar({ onOpenBooking, currency, setCurrency }) {
                   ))}
                 </div>
               </div>
+
+              {/* Mobile Auth Button */}
+              {user ? (
+                <div className="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-hotel-gold/30">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-hotel-gold text-hotel-emerald-dark font-bold text-xs flex items-center justify-center">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-white truncate max-w-[150px]">{user.name}</p>
+                      <p className="text-[10px] text-gray-400 truncate max-w-[150px]">{user.email}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onLogout();
+                    }}
+                    className="text-xs text-red-400 hover:text-red-300 font-medium px-2 py-1 bg-red-950/40 rounded-lg border border-red-800/40"
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenAuth();
+                  }}
+                  className="w-full py-2.5 flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 text-hotel-gold border border-hotel-gold/40 text-xs font-bold uppercase tracking-wider"
+                >
+                  <User className="w-3.5 h-3.5" />
+                  <span>Sign In / Register</span>
+                </button>
+              )}
 
               <button
                 onClick={() => {

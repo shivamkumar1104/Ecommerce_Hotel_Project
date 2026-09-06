@@ -17,10 +17,22 @@ import TableReservationModal from './components/TableReservationModal';
 import ReviewModal from './components/ReviewModal';
 import Toast from './components/Toast';
 import RegisterTest from './components/RegisterTest';
+import AuthModal from './components/AuthModal';
 
 import { REVIEWS_DATA } from './data/hotelData';
 
 export default function App() {
+  // User Auth State
+  const [user, setUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('hotel_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
   // Global States
   const [currency, setCurrency] = useState('USD');
   const [toastMessage, setToastMessage] = useState(null);
@@ -65,6 +77,18 @@ export default function App() {
     setToastMessage(`Experience inquiry for "${experienceTitle}" submitted to Concierge.`);
   };
 
+  const handleAuthSuccess = (loggedInUser) => {
+    setUser(loggedInUser);
+    setToastMessage(`Welcome, ${loggedInUser.name || 'Guest'}!`);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('hotel_user');
+    localStorage.removeItem('hotel_token');
+    setUser(null);
+    setToastMessage('You have been signed out.');
+  };
+
   return (
     <div className="min-h-screen bg-hotel-cream text-hotel-dark font-sans selection:bg-hotel-gold selection:text-hotel-emerald-dark">
       
@@ -73,6 +97,9 @@ export default function App() {
         onOpenBooking={() => handleOpenBooking()}
         currency={currency}
         setCurrency={setCurrency}
+        user={user}
+        onOpenAuth={() => setIsAuthModalOpen(true)}
+        onLogout={handleLogout}
       />
 
       {/* Main Content Sections */}
@@ -161,6 +188,13 @@ export default function App() {
       <Toast
         message={toastMessage}
         onClose={() => setToastMessage(null)}
+      />
+
+      {/* 6. Guest Auth Modal (Sign In / Register) */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        onSuccess={handleAuthSuccess}
       />
 
       {/* Temporary Backend Register API Tester */}
