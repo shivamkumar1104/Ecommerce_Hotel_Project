@@ -1,15 +1,22 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+dotenv.config(); // fallback to default CWD
+
 import app from "./app.js";
 import connectDB from "./config/db.js";
 
 const PORT = process.env.PORT || 5000;
 
-const startServer = async()=> {
-    try{
+const startServer = async () => {
+    try {
         await connectDB();
 
-        app.listen(PORT, () =>{
-            console.log(`server is running on http://localhost: ${PORT}`);
+        app.listen(PORT, () => {
+            console.log(`server is running on http://localhost:${PORT}`);
         });
 
     }catch(error){
