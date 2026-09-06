@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import { useReducer } from 'react';
 
 const USerSchema = new mongoose.Schema(
     {
@@ -48,11 +49,53 @@ const USerSchema = new mongoose.Schema(
         // Profile image
         avatar:{
             type: String,
-            deafu
-        }
+            default: "",
 
+        },
+
+        // phone number
+        phone: {
+            type: String,
+            trim: true,
+            default: "",
+        },
+
+        // account status
+        isActive: {
+            type: Boolean,
+            default: true,
+        },
+        },
+        {
+            timestamps: true,
         }
     
-)
+);
+
+userSchema.pre("save", async function(next){
+    // Password hasn't changed
+    if(!this.isModified("password")){
+        return next();
+    }
+
+    const salt = await bcrypt.genSalt(12);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+});
+
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.toJSON = function(){
+    const user = this.toObject();
+
+    delete user.password;
+    delete useReducer.__v;
+    
+}
+
+
+
 const User = mongoose.model('User', UserSchema);
 export default User;
