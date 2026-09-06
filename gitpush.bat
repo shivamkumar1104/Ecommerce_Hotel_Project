@@ -10,7 +10,7 @@ echo.
 :loop
 echo [%time%] Checking for changes...
 git add .
-git commit -m "Auto-commit: update DSA practice" >nul 2>&1
+git commit -m "Ecommerce_Hotel_Project" >nul 2>&1
 git push origin main >nul 2>&1
 
 timeout /t 600 /nobreak >nul
