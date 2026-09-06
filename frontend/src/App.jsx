@@ -16,6 +16,7 @@ import BookingModal from './components/BookingModal';
 import TableReservationModal from './components/TableReservationModal';
 import ReviewModal from './components/ReviewModal';
 import Toast from './components/Toast';
+import RegisterTest from './components/RegisterTest';
 
 import { REVIEWS_DATA } from './data/hotelData';
 
@@ -161,6 +162,9 @@ export default function App() {
         message={toastMessage}
         onClose={() => setToastMessage(null)}
       />
+
+      {/* Temporary Backend Register API Tester */}
+      <RegisterTest />
 
     </div>
   );

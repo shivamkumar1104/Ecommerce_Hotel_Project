@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { useReducer } from 'react';
 
-const USerSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         // name
         name: {
