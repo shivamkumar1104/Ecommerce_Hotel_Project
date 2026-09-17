@@ -34,7 +34,7 @@ if(process.env.NODE_ENV !== "production"){
     app.use(morgan("dev"));
 }
 
-app.get("/api/health", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).json({
         success: true,
         message: "Hotel api is running",
