@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { HOTEL_INFO } from '../data/hotelData';
-import { Phone, Calendar, Globe, Menu, X, Sparkles, ChevronDown, User, LogOut } from 'lucide-react';
+import { Calendar, Globe, Menu, X, Sparkles, ChevronDown, User, LogOut } from 'lucide-react';
 
 export default function Navbar({ onOpenBooking, currency, setCurrency, user, onOpenAuth, onLogout }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,25 +39,43 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
   const handleLanguageChange = (langCode) => {
     setCurrentLang(langCode);
 
-    // 1. Set Google Translate cookies
+    // If switching back to English, clear Google Translate
+    if (langCode === 'en') {
+      // Clear cookies
+      document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      document.cookie = `googtrans=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+      // Select English in combo and reload
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = langCode;
+        select.dispatchEvent(new Event('change'));
+        setTimeout(() => window.location.reload(), 100);
+      } else {
+        window.location.reload();
+      }
+      return;
+    }
+
+    // Set Google Translate cookies
     document.cookie = `googtrans=/en/${langCode}; path=/;`;
     if (window.location.hostname) {
       document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname};`;
     }
 
-    // 2. Trigger Google Translate combo box if present
+    // Try to trigger the hidden Google Translate combo box
     const select = document.querySelector('.goog-te-combo');
     if (select) {
       select.value = langCode;
       select.dispatchEvent(new Event('change'));
+      // Suppress the Google toolbar banner that may appear
       setTimeout(() => {
         if (document.body) document.body.style.top = '0px';
         document.querySelectorAll('iframe.skiptranslate, .goog-te-banner-frame, [class*="VIpgJd"]').forEach(el => {
           el.style.setProperty('display', 'none', 'important');
         });
-      }, 50);
+      }, 200);
     } else {
-      // Fallback reload so Google Translate applies cookie on start
+      // Google Translate not loaded yet — set cookie and reload so it picks it up
       window.location.reload();
     }
   };
@@ -162,16 +180,6 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
               )}
               
             </div>
-
-            {/* Quick Phone Call Link */}
-            <a
-              href={`tel:${HOTEL_INFO.phone}`}
-              className="hidden md:flex items-center gap-2 text-xs text-gray-300 hover:text-hotel-gold transition-colors"
-              title="Concierge Desk"
-            >
-              <Phone className="w-3.5 h-3.5 text-hotel-gold" />
-              <span className="font-mono text-[11px] opacity-80">{HOTEL_INFO.phone}</span>
-            </a>
 
             {/* CTA Reserve Suite */}
             <button
