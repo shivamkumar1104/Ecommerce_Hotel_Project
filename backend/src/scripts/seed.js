@@ -41,11 +41,11 @@ const SUITES_SEED = [
         isPrimary: true,
       },
       {
-        url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
+        url: "../images/the-anam-jetnF4Xv4h8-unsplash.jpg",
         alt: "Villa interior bedroom",
       },
       {
-        url: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80",
+        url: "../images/vojtech-bruzek-Yrxr3bsPdS0-unsplash.jpg",
         alt: "Villa bathroom",
       },
     ],
@@ -79,12 +79,12 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
+        url: "../images/salman-saqib-z6UAWpQAhXs-unsplash.jpg",
         alt: "Royal Penthouse living area",
         isPrimary: true,
       },
       {
-        url: "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80",
+        url: "../images/point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash.jpg",
         alt: "Penthouse bedroom",
       },
     ],
@@ -117,7 +117,7 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1200&q=80",
+        url: "../images/vincent-branciforti-vAu_QQFGPRw-unsplash.jpg",
         alt: "Rainforest Sanctuary Suite exterior",
         isPrimary: true,
       },
@@ -151,7 +151,7 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80",
+        url: "../images/matthew-fournier-6bU5PazoR8E-unsplash.jpg",
         alt: "Ocean Signature Suite view",
         isPrimary: true,
       },
