@@ -36,16 +36,16 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "../images/christian-lambert-vmIWr0NnpCQ-unsplash.jpg",
+        url: "/images/Infinity Pool Ocean Villa exterior.jpg",
         alt: "Infinity Pool Ocean Villa exterior",
         isPrimary: true,
       },
       {
-        url: "../images/the-anam-jetnF4Xv4h8-unsplash.jpg",
+        url: "/images/Villa interior bedroom.jpg",
         alt: "Villa interior bedroom",
       },
       {
-        url: "../images/vojtech-bruzek-Yrxr3bsPdS0-unsplash.jpg",
+        url: "/images/Villa bathroom.jpg",
         alt: "Villa bathroom",
       },
     ],
@@ -79,12 +79,12 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "../images/salman-saqib-z6UAWpQAhXs-unsplash.jpg",
+        url: "/images/Royal Penthouse living area.jpg",
         alt: "Royal Penthouse living area",
         isPrimary: true,
       },
       {
-        url: "../images/point3d-commercial-imaging-ltd-oxeCZrodz78-unsplash.jpg",
+        url: "/images/Penthouse bedroom.jpg",
         alt: "Penthouse bedroom",
       },
     ],
@@ -117,7 +117,7 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "../images/vincent-branciforti-vAu_QQFGPRw-unsplash.jpg",
+        url: "/images/Rainforest Sanctuary Suite exterior.jpg",
         alt: "Rainforest Sanctuary Suite exterior",
         isPrimary: true,
       },
@@ -151,7 +151,7 @@ const SUITES_SEED = [
     ],
     images: [
       {
-        url: "../images/matthew-fournier-6bU5PazoR8E-unsplash.jpg",
+        url: "/images/Ocean Signature Suite view.jpg",
         alt: "Ocean Signature Suite view",
         isPrimary: true,
       },

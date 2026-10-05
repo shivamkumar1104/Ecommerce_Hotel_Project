@@ -22,11 +22,11 @@ export const SUITES_DATA = [
     guests: "2 - 4 Guests",
     beds: "1 King + 1 Daybed",
     view: "Panoramic Ocean & River Delta View",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/Infinity Pool Ocean Villa exterior.jpg",
     images: [
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1200&q=80"
+      "/images/Infinity Pool Ocean Villa exterior.jpg",
+      "/images/Villa interior bedroom.jpg",
+      "/images/Villa bathroom.jpg"
     ],
     description: "Perched gracefully above the water's edge, this private villa features an expansive heated infinity pool, outdoor rainfall shower, floor-to-ceiling glass walls, and a dedicated 24-hour personal butler.",
     amenities: [
@@ -49,11 +49,10 @@ export const SUITES_DATA = [
     guests: "4 - 6 Guests",
     beds: "2 Master King Suites",
     view: "360° Mountain & Ocean Skyline",
-    image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/Royal Penthouse living area.jpg",
     images: [
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1591088398332-8a7791972843?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80"
+      "/images/Royal Penthouse living area.jpg",
+      "/images/Penthouse bedroom.jpg"
     ],
     description: "The crown jewel of Equalirio. Occupying the top floor, this penthouse offers an private rooftop plunge pool, private elevator access, wine cellar, stargazing telescope deck, and bespoke spa suite.",
     amenities: [
@@ -76,10 +75,9 @@ export const SUITES_DATA = [
     guests: "2 Guests",
     beds: "1 Organic Cotton King Bed",
     view: "Lush Canopy & Waterfalls",
-    image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/Rainforest Sanctuary Suite exterior.jpg",
     images: [
-      "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
+      "/images/Rainforest Sanctuary Suite exterior.jpg"
     ],
     description: "Immerse yourself in tranquil nature. Crafted with sustainable teak and local stone, this sanctuary suite features open-air lounge decks overlooking natural cascade pools.",
     amenities: [
@@ -102,10 +100,9 @@ export const SUITES_DATA = [
     guests: "2 - 4 Guests",
     beds: "1 King + Convertible Lounge",
     view: "Direct Lagoon & River Lagoon",
-    image: "https://images.unsplash.com/photo-1439130497086-d143048282cc?auto=format&fit=crop&w=1200&q=80",
+    image: "/images/Ocean Signature Suite view.jpg",
     images: [
-      "https://images.unsplash.com/photo-1439130497086-d143048282cc?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80"
+      "/images/Ocean Signature Suite view.jpg"
     ],
     description: "Suspended directly over calm turquoise waters with glass floor viewing panels, direct lagoon access stairs, and a hammock net suspended over the sea.",
     amenities: [
