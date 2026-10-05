@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: [true, "Name is required"],
             trim: true, 
-            minlength: [4, "Name must be atleast 4 characters long"],
-            maxlength: [25, "Name should not be more than 25 charactters long"],
+            minlength: [2, "Name must be at least 2 characters long"],
+            maxlength: [60, "Name should not be more than 60 characters long"],
         },
         // email
         email: {
@@ -26,18 +26,26 @@ const userSchema = new mongoose.Schema(
         // password
         password: {
             type: String,
-            required: [true, "Password is required"],
-            minlength: [8, "Password must be at least 8 characters"],
-            maxlength: [12, "Password must not be more than 12 characters"],
-            select: false,
-            validate: {
-                validator: function(value) {
-                    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(value);
+            required: [
+                function() {
+                    return this.authProvider === "local";
                 },
-                message: "Password must contain at least 1 lowercase letter, uppercase letter, number, and special character (@$!%*?&).",
-            }
+                "Password is required for email registration",
+            ],
+            select: false,
         },
         
+        // Google OAuth Fields
+        googleId: {
+            type: String,
+            default: null,
+        },
+        authProvider: {
+            type: String,
+            enum: ["local", "google"],
+            default: "local",
+        },
+
         // User Role
         role: {
             type: String,
@@ -72,8 +80,8 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre("save", async function () {
-    // Password hasn't changed
-    if (!this.isModified("password")) {
+    // Password hasn't changed or isn't set (for google auth)
+    if (!this.isModified("password") || !this.password) {
         return;
     }
 
@@ -82,6 +90,7 @@ userSchema.pre("save", async function () {
 });
 
 userSchema.methods.comparePassword = async function(candidatePassword) {
+    if (!this.password) return false;
     return bcrypt.compare(candidatePassword, this.password);
 };
 

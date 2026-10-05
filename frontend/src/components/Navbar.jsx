@@ -50,6 +50,12 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
     if (select) {
       select.value = langCode;
       select.dispatchEvent(new Event('change'));
+      setTimeout(() => {
+        if (document.body) document.body.style.top = '0px';
+        document.querySelectorAll('iframe.skiptranslate, .goog-te-banner-frame, [class*="VIpgJd"]').forEach(el => {
+          el.style.setProperty('display', 'none', 'important');
+        });
+      }, 50);
     } else {
       // Fallback reload so Google Translate applies cookie on start
       window.location.reload();
@@ -180,10 +186,24 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
             {user ? (
               <div className="flex items-center gap-2 pl-2 border-l border-white/15">
                 <div className="flex items-center gap-2 text-xs text-hotel-gold bg-white/10 px-3 py-1.5 rounded-full border border-hotel-gold/30">
-                  <div className="w-5 h-5 rounded-full bg-hotel-gold text-hotel-emerald-dark font-bold text-[10px] flex items-center justify-center">
-                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                  </div>
-                  <span className="font-serif tracking-wider max-w-[80px] truncate">{user.name.split(' ')[0]}</span>
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name || 'User'}
+                      className="w-5 h-5 rounded-full object-cover border border-hotel-gold/50"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <div className="w-5 h-5 rounded-full bg-hotel-gold text-hotel-emerald-dark font-bold text-[10px] flex items-center justify-center">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  )}
+                  <span className="font-serif tracking-wider max-w-[80px] truncate">{user.name ? user.name.split(' ')[0] : 'Guest'}</span>
+                  {user.role === 'admin' && (
+                    <span className="px-1.5 py-0.5 text-[9px] font-bold bg-amber-400/20 text-amber-300 border border-amber-400/40 rounded uppercase tracking-wider">
+                      Admin
+                    </span>
+                  )}
                 </div>
                 <button
                   onClick={onLogout}
