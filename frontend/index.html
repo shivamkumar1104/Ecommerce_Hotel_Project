@@ -11,68 +11,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Complete suppression of Google Translate banner / toolbar -->
-    <style>
-      .goog-te-banner-frame,
-      .goog-te-banner-frame.skiptranslate,
-      iframe.goog-te-banner-frame,
-      iframe.skiptranslate,
-      iframe[class*="VIpgJd"],
-      iframe[src*="translate.google"],
-      iframe[id*=":1.container"],
-      iframe[id*=":2.container"],
-      .goog-te-banner,
-      .goog-te-balloon-frame,
-      #goog-gt-tt,
-      #goog-gt-vt,
-      .goog-text-highlight,
-      body > .skiptranslate:not(#google_translate_element),
-      [class*="VIpgJd-ZVi9od"],
-      [class*="VIpgJd"] {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        pointer-events: none !important;
-        height: 0 !important;
-        width: 0 !important;
-        max-height: 0 !important;
-        border: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      html, body {
-        top: 0px !important;
-        position: static !important;
-      }
-    </style>
   </head>
   <body class="bg-hotel-cream text-hotel-dark font-sans antialiased selection:bg-hotel-gold selection:text-white">
     <div id="root"></div>
-
-    <!-- Hidden Google Translate Element -->
-    <div id="google_translate_element" style="display:none; visibility:hidden; position:absolute; top:-9999px; left:-9999px;"></div>
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'en,hi,es,fr,de,ja,ar,ru,zh-CN',
-          autoDisplay: false
-        }, 'google_translate_element');
-      }
-
-      // Continuous protection: keep body top at 0 and hide injected Google banner elements
-      const observer = new MutationObserver(() => {
-        if (document.body && document.body.style.top && document.body.style.top !== '0px') {
-          document.body.style.top = '0px';
-        }
-        document.querySelectorAll('iframe.skiptranslate, .goog-te-banner-frame, [class*="VIpgJd-ZVi9od-OR95cd"]').forEach(el => {
-          el.style.setProperty('display', 'none', 'important');
-        });
-      });
-      observer.observe(document.documentElement, { attributes: true, subtree: true, attributeFilter: ['style', 'class'] });
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <!-- Google Identity Services (Sign In with Google) -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>

@@ -1,8 +1,10 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { REVIEWS_DATA } from '../data/hotelData';
 import { Star, Quote, MessageSquarePlus, Award, CheckCircle } from 'lucide-react';
 
 export default function Reviews({ onWriteReview, reviewsList }) {
+  const { t } = useTranslation();
   const reviews = reviewsList || REVIEWS_DATA;
 
   return (
@@ -11,13 +13,13 @@ export default function Reviews({ onWriteReview, reviewsList }) {
         
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-hotel-gold text-xs uppercase tracking-[0.3em] font-medium mb-2">
-            <Award className="w-4 h-4" /> Guest Testimonials & Recognition
+            <Award className="w-4 h-4" /> {t('reviews.subtitle')}
           </div>
           <h2 className="text-3xl sm:text-5xl font-serif text-white font-normal mb-4">
-            Endorsed by World Travelers
+            {t('reviews.title')}
           </h2>
           <p className="text-gray-300 text-sm font-light leading-relaxed">
-            Read authentic stories from guests who experienced total equilibrium at Equalirio Resort.
+            {t('reviews.basedOn')}
           </p>
         </div>
 
@@ -35,7 +37,7 @@ export default function Reviews({ onWriteReview, reviewsList }) {
                 ))}
               </div>
               <span className="text-xs uppercase tracking-widest text-white font-semibold">
-                Exceptional — 342 Verified Guest Reviews
+                {t('reviews.basedOn')}
               </span>
             </div>
           </div>
@@ -64,7 +66,7 @@ export default function Reviews({ onWriteReview, reviewsList }) {
             className="shrink-0 bg-white/10 hover:bg-hotel-gold hover:text-hotel-emerald-dark text-white font-bold text-xs uppercase tracking-widest px-6 py-3 rounded-full border border-hotel-gold/40 transition-all flex items-center gap-2"
           >
             <MessageSquarePlus className="w-4 h-4" />
-            <span>Write a Review</span>
+            <span>{t('reviews.writeReview')}</span>
           </button>
 
         </div>

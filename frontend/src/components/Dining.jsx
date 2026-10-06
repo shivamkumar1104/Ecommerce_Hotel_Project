@@ -1,21 +1,24 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { DINING_DATA } from '../data/hotelData';
-import { Utensils, Clock, Sparkles, ChefHat, Calendar } from 'lucide-react';
+import { Utensils, Clock, ChefHat, Calendar } from 'lucide-react';
 
 export default function Dining({ onReserveTable }) {
+  const { t } = useTranslation();
+
   return (
     <section id="dining" className="py-24 px-4 sm:px-6 lg:px-8 bg-hotel-emerald-dark text-white relative">
       <div className="max-w-7xl mx-auto">
         
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-hotel-gold text-xs uppercase tracking-[0.3em] font-medium mb-2">
-            <ChefHat className="w-4 h-4" /> Culinary Mastery & Fine Spirits
+            <ChefHat className="w-4 h-4" /> {t('dining.subtitle')}
           </div>
           <h2 className="text-3xl sm:text-5xl font-serif text-white font-normal mb-4">
-            Michelin-Inspired Dining & Waterfront Lounges
+            {t('dining.title')}
           </h2>
           <p className="text-gray-300 text-sm font-light leading-relaxed">
-            From sea-to-table coastal cuisine to wood-fired sunset tapas, our culinary master artisans craft unforgettable gastronomic journeys.
+            {t('dining.desc')}
           </p>
         </div>
 
@@ -75,7 +78,7 @@ export default function Dining({ onReserveTable }) {
                   className="bg-hotel-gold hover:bg-hotel-gold-light text-hotel-emerald-dark font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-xl transition-all shadow-gold flex items-center gap-2"
                 >
                   <Calendar className="w-3.5 h-3.5" />
-                  <span>Reserve Table</span>
+                  <span>{t('dining.reserveTable')}</span>
                 </button>
               </div>
 

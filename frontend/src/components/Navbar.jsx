@@ -1,83 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HOTEL_INFO } from '../data/hotelData';
 import { Calendar, Globe, Menu, X, Sparkles, ChevronDown, User, LogOut } from 'lucide-react';
+import { SUPPORTED_LANGUAGES } from '../i18n';
 
 export default function Navbar({ onOpenBooking, currency, setCurrency, user, onOpenAuth, onLogout }) {
+  const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
-
-  // const currencies = [
-  //   { code: 'IND', symbol: '₹', label: 'IND (₹)' },
-  //   { code: 'USD', symbol: '$', label: 'USD ($)' },
-  //   { code: 'EUR', symbol: '€', label: 'EUR (€)' },
-  //   { code: 'GBP', symbol: '£', label: 'GBP (£)' },
-  //   { code: 'JPY', symbol: '¥', label: 'JPY (¥)' },
-  // ];
-
-  const languages = [
-    { code: 'en', label: 'English', native: 'English' },
-    { code: 'hi', label: 'Hindi', native: 'हिन्दी' },
-    { code: 'es', label: 'Spanish', native: 'Español' },
-    { code: 'fr', label: 'French', native: 'Français' },
-    { code: 'de', label: 'German', native: 'Deutsch' },
-    { code: 'ja', label: 'Japanese', native: '日本語' },
-    { code: 'ar', label: 'Arabic', native: 'العربية' }
-  ];
-
-  const [currentLang, setCurrentLang] = useState('en');
-  // const [dropdownTab, setDropdownTab] = useState('currency'); // 'currency' | 'language'
+  const [currentLang, setCurrentLang] = useState(() => i18n.language || 'en');
 
   useEffect(() => {
-    // Read persisted Google Translate language if set
-    const match = document.cookie.match(/googtrans=\/en\/([a-zA-Z\-]+)/);
-    if (match && match[1]) {
-      setCurrentLang(match[1]);
-    }
-  }, []);
+    setCurrentLang(i18n.language || 'en');
+  }, [i18n.language]);
 
   const handleLanguageChange = (langCode) => {
+    i18n.changeLanguage(langCode);
+    localStorage.setItem('i18nextLng', langCode);
     setCurrentLang(langCode);
-
-    // If switching back to English, clear Google Translate
-    if (langCode === 'en') {
-      // Clear cookies
-      document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      document.cookie = `googtrans=; path=/; domain=${window.location.hostname}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-      // Select English in combo and reload
-      const select = document.querySelector('.goog-te-combo');
-      if (select) {
-        select.value = langCode;
-        select.dispatchEvent(new Event('change'));
-        setTimeout(() => window.location.reload(), 100);
-      } else {
-        window.location.reload();
-      }
-      return;
-    }
-
-    // Set Google Translate cookies
-    document.cookie = `googtrans=/en/${langCode}; path=/;`;
-    if (window.location.hostname) {
-      document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname};`;
-    }
-
-    // Try to trigger the hidden Google Translate combo box
-    const select = document.querySelector('.goog-te-combo');
-    if (select) {
-      select.value = langCode;
-      select.dispatchEvent(new Event('change'));
-      // Suppress the Google toolbar banner that may appear
-      setTimeout(() => {
-        if (document.body) document.body.style.top = '0px';
-        document.querySelectorAll('iframe.skiptranslate, .goog-te-banner-frame, [class*="VIpgJd"]').forEach(el => {
-          el.style.setProperty('display', 'none', 'important');
-        });
-      }, 200);
-    } else {
-      // Google Translate not loaded yet — set cookie and reload so it picks it up
-      window.location.reload();
-    }
   };
 
   useEffect(() => {
@@ -89,13 +30,13 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Suites & Villas', href: '#suites' },
-    { name: 'Amenities', href: '#amenities' },
-    { name: 'Dining', href: '#dining' },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Reviews', href: '#reviews' },
-    { name: 'FAQs', href: '#faqs' },
+    { name: t('nav.about'), href: '#about' },
+    { name: t('nav.suites'), href: '#suites' },
+    { name: t('nav.amenities'), href: '#amenities' },
+    { name: t('nav.dining'), href: '#dining' },
+    { name: t('nav.gallery'), href: '#gallery' },
+    { name: t('nav.reviews'), href: '#reviews' },
+    { name: t('nav.faqs'), href: '#faqs' },
   ];
 
   return (
@@ -115,7 +56,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
               <Sparkles className="w-5 h-5 text-hotel-gold group-hover:rotate-45 transition-transform duration-500" />
             </div>
             <div className="flex flex-col">
-              <span className="font-serif text-2xl tracking-[0.25em] font-bold text-white group-hover:text-hotel-gold transition-colors">
+              <span className="font-serif text-2xl tracking-[0.25em] font-bold text-white group-hover:text-hotel-gold transition-colors notranslate" translate="no">
                 {HOTEL_INFO.name}
               </span>
               <span className="text-[9px] tracking-[0.3em] uppercase text-hotel-gold-light opacity-80 -mt-1 font-sans">
@@ -141,38 +82,46 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
           <div className="hidden sm:flex items-center gap-4">
             
             {/* Currency & Language Selector */}
-            <div className="relative">
+            {/* Currency & Language Selector */}
+            <div className="relative notranslate" translate="no">
               <button
                 onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
-                className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-hotel-gold px-3 py-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
+                className="flex items-center gap-1.5 text-xs text-gray-300 hover:text-hotel-gold px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors notranslate"
+                translate="no"
                 title="Select Language"
               >
-                <Globe className="w-3.5 h-3.5 text-hotel-gold" />
-                <span className="uppercase text-[11px] font-mono text-hotel-gold">{currentLang}</span>
-                <ChevronDown className="w-3 h-3 opacity-60" />
+                <Globe className="w-3.5 h-3.5 text-hotel-gold notranslate" />
+                <span className="text-[11px] font-mono font-semibold tracking-wider text-hotel-gold uppercase notranslate" translate="no">
+                  Language
+                </span>
+                <ChevronDown className="w-3 h-3 opacity-60 notranslate" />
               </button>
 
               {currencyDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-52 bg-hotel-emerald-dark border border-hotel-gold/30 rounded-2xl shadow-2xl overflow-hidden z-50 animate-fade-in text-white">
-                  <div className="p-1.5 max-h-56 overflow-y-auto">
-                    {languages.map((l) => (
+                <div className="absolute right-0 mt-2 w-56 bg-hotel-emerald-dark border border-hotel-gold/30 rounded-2xl shadow-2xl overflow-hidden z-50 animate-fade-in text-white notranslate" translate="no">
+                  <div className="p-1.5 max-h-60 overflow-y-auto notranslate" translate="no">
+                    {SUPPORTED_LANGUAGES.map((l) => (
                       <button
                         key={l.code}
                         onClick={() => {
                           handleLanguageChange(l.code);
                           setCurrencyDropdownOpen(false);
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-colors ${
+                        className={`w-full text-left px-3 py-2 rounded-lg text-xs flex items-center justify-between transition-colors notranslate ${
                           currentLang === l.code
                             ? 'bg-hotel-gold/20 text-hotel-gold font-bold'
                             : 'text-gray-300 hover:bg-white/10 hover:text-white'
                         }`}
+                        translate="no"
                       >
-                        <div className="flex flex-col">
-                          <span className="font-medium">{l.native}</span>
-                          <span className="text-[10px] text-gray-400">{l.label}</span>
+                        <div className="flex items-center gap-2.5 notranslate" translate="no">
+                          <span className="text-sm notranslate">{l.flag}</span>
+                          <div className="flex flex-col notranslate" translate="no">
+                            <span className="font-medium notranslate" translate="no">{l.native}</span>
+                            <span className="text-[10px] text-gray-400 notranslate" translate="no">{l.label}</span>
+                          </div>
                         </div>
-                        {currentLang === l.code && <span className="w-1.5 h-1.5 rounded-full bg-hotel-gold"></span>}
+                        {currentLang === l.code && <span className="w-1.5 h-1.5 rounded-full bg-hotel-gold notranslate" translate="no"></span>}
                       </button>
                     ))}
                   </div>
@@ -187,7 +136,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
               className="flex items-center gap-2 bg-gradient-to-r from-hotel-gold to-hotel-gold-dark hover:from-hotel-gold-light hover:to-hotel-gold text-hotel-emerald-dark font-semibold text-xs tracking-wider uppercase px-5 py-2.5 rounded-full shadow-gold hover:shadow-lg transition-all transform hover:-translate-y-0.5"
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>Reserve Suite</span>
+              <span>{t('nav.reserveSuite')}</span>
             </button>
 
             {/* Auth Profile / Sign In */}
@@ -227,7 +176,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                 className="flex items-center gap-1.5 text-xs text-gray-200 hover:text-hotel-gold px-3.5 py-2 rounded-full border border-white/15 bg-white/5 hover:bg-white/10 transition-colors"
               >
                 <User className="w-3.5 h-3.5 text-hotel-gold" />
-                <span className="font-serif tracking-wider uppercase text-[11px]">Sign In</span>
+                <span className="font-serif tracking-wider uppercase text-[11px]">{t('nav.signIn')}</span>
               </button>
             )}
           </div>
@@ -239,7 +188,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
               className="sm:hidden flex items-center gap-1 bg-hotel-gold text-hotel-emerald-dark text-[11px] font-semibold tracking-wider uppercase px-3 py-1.5 rounded-full"
             >
               <Calendar className="w-3 h-3" />
-              <span>Book</span>
+              <span>{t('nav.reserveSuite')}</span>
             </button>
 
             <button
@@ -269,24 +218,34 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
             ))}
 
             <div className="pt-4 flex flex-col gap-3">
-              {/* <div className="flex items-center justify-between text-xs text-gray-400">
-                <span>Select Currency:</span>
-                <div className="flex gap-2">
-                  {currencies.map((c) => (
+              {/* Mobile Language Selector */}
+              <div className="flex items-center justify-between text-xs text-gray-400 notranslate py-2 border-b border-white/5" translate="no">
+                <span className="flex items-center gap-1.5 text-gray-300 font-medium notranslate" translate="no">
+                  <Globe className="w-3.5 h-3.5 text-hotel-gold notranslate" />
+                  Language:
+                </span>
+                <div className="flex flex-wrap gap-1.5 justify-end notranslate" translate="no">
+                  {SUPPORTED_LANGUAGES.map((l) => (
                     <button
-                      key={c.code}
-                      onClick={() => setCurrency(c.code)}
-                      className={`px-2 py-1 rounded text-xs ${
-                        currency === c.code
+                      key={l.code}
+                      onClick={() => {
+                        handleLanguageChange(l.code);
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`px-2.5 py-1 rounded text-[11px] font-mono transition-colors notranslate flex items-center gap-1 ${
+                        currentLang === l.code
                           ? 'bg-hotel-gold text-hotel-emerald-dark font-bold'
-                          : 'bg-white/10 text-gray-300'
+                          : 'bg-white/10 text-gray-300 hover:bg-white/20'
                       }`}
+                      translate="no"
+                      title={l.label}
                     >
-                      {c.code}
+                      <span>{l.flag}</span>
+                      <span>{l.code.toUpperCase()}</span>
                     </button>
                   ))}
                 </div>
-              </div> */}
+              </div>
 
               {/* Mobile Auth Button */}
               {user ? (
@@ -307,7 +266,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                     }}
                     className="text-xs text-red-400 hover:text-red-300 font-medium px-2 py-1 bg-red-950/40 rounded-lg border border-red-800/40"
                   >
-                    Logout
+                    {t('nav.signOut')}
                   </button>
                 </div>
               ) : (
@@ -319,7 +278,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                   className="w-full py-2.5 flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/15 text-hotel-gold border border-hotel-gold/40 text-xs font-bold uppercase tracking-wider"
                 >
                   <User className="w-3.5 h-3.5" />
-                  <span>Sign In / Register</span>
+                  <span>{t('nav.register')}</span>
                 </button>
               )}
 
@@ -331,7 +290,7 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
                 className="w-full mt-2 flex items-center justify-center gap-2 bg-hotel-gold hover:bg-hotel-gold-light text-hotel-emerald-dark font-bold text-xs tracking-widest uppercase py-3 rounded-xl shadow-gold"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Reserve Suite Now</span>
+                <span>{t('nav.reserveSuite')}</span>
               </button>
             </div>
           </nav>

@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SUITES_DATA } from '../data/hotelData';
 import { Users, Maximize2, Eye, Sparkles, Bed, Check, ArrowRight } from 'lucide-react';
 
 export default function Suites({ onSelectSuite, onBookSuite, currency }) {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const categories = ['All', 'Villas', 'Penthouses', 'Eco Suites'];
+  const categories = [
+    { key: 'All', label: t('suites.filterAll') },
+    { key: 'Villas', label: t('suites.filterVillas') },
+    { key: 'Penthouses', label: t('suites.filterPenthouses') },
+    { key: 'Eco Suites', label: t('suites.filterEcoSuites') }
+  ];
 
   // Currency multiplier map for display demo
   const currencyRates = {
@@ -38,13 +45,13 @@ export default function Suites({ onSelectSuite, onBookSuite, currency }) {
         {/* Header Title */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-hotel-gold text-xs uppercase tracking-[0.3em] font-medium mb-2">
-            <Sparkles className="w-4 h-4" /> Accommodations & Private Sanctuaries
+            <Sparkles className="w-4 h-4" /> {t('suites.subtitle')}
           </div>
           <h2 className="text-3xl sm:text-5xl font-serif font-normal text-white mb-4">
-            Curated Luxury Suites & Overwater Villas
+            {t('suites.title')}
           </h2>
           <p className="text-gray-300 text-sm font-light leading-relaxed">
-            Each accommodation is designed with floor-to-ceiling panoramic views, private pools, sustainable natural textures, and dedicated 24-hour personal butler concierge service.
+            {t('suites.desc')}
           </p>
         </div>
 
@@ -52,15 +59,15 @@ export default function Suites({ onSelectSuite, onBookSuite, currency }) {
         <div className="flex justify-center items-center gap-2 sm:gap-4 mb-16 flex-wrap">
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
               className={`px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold transition-all duration-300 ${
-                activeCategory === cat
+                activeCategory === cat.key
                   ? 'bg-hotel-gold text-hotel-emerald-dark shadow-gold scale-105'
                   : 'bg-white/5 text-gray-300 hover:bg-white/10 hover:text-white border border-white/10'
               }`}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -150,7 +157,7 @@ export default function Suites({ onSelectSuite, onBookSuite, currency }) {
                     <span className="font-serif text-3xl text-hotel-gold font-bold">
                       {formatPrice(suite.price)}
                     </span>
-                    <span className="text-xs text-gray-400 font-light">/ night</span>
+                    <span className="text-xs text-gray-400 font-light">{t('suites.perNight')}</span>
                   </div>
                 </div>
 
@@ -160,14 +167,14 @@ export default function Suites({ onSelectSuite, onBookSuite, currency }) {
                     className="flex-1 sm:flex-none border border-white/20 hover:border-hotel-gold text-white text-xs uppercase tracking-wider font-semibold px-4 py-3 rounded-xl hover:bg-white/10 transition-colors flex items-center justify-center gap-1.5"
                   >
                     <Eye className="w-4 h-4 text-hotel-gold" />
-                    <span>Specs</span>
+                    <span>{t('suites.viewDetails')}</span>
                   </button>
 
                   <button
                     onClick={() => onBookSuite(suite)}
                     className="flex-1 sm:flex-none bg-hotel-gold hover:bg-hotel-gold-light text-hotel-emerald-dark font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-xl transition-all shadow-gold flex items-center justify-center gap-1.5"
                   >
-                    <span>Reserve</span>
+                    <span>{t('suites.bookNow')}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

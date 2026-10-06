@@ -5,7 +5,7 @@ export const HOTEL_INFO = {
   location: "Rio Sanctuary Bay, Private Coastline",
   rating: 4.98,
   reviewCount: 342,
-  phone: "+1 (800) 555-EQUAL",
+  phone: "",
   email: "concierge@equalirio-resort.com",
   address: "100 Serenity Boulevard, Rio Bay, Paradise Coast"
 };

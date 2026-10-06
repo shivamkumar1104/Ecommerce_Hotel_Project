@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AMENITIES_DATA } from '../data/hotelData';
 import { Sparkles, ArrowRight, Compass } from 'lucide-react';
 
 export default function Amenities({ onOpenInquiry }) {
+  const { t } = useTranslation();
   const [selectedAmenity, setSelectedAmenity] = useState(AMENITIES_DATA[0]);
 
   return (
@@ -11,13 +13,13 @@ export default function Amenities({ onOpenInquiry }) {
         
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 text-hotel-gold-dark text-xs uppercase tracking-[0.3em] font-medium mb-2">
-            <Sparkles className="w-4 h-4 text-hotel-emerald" /> Unparalleled Experiences
+            <Sparkles className="w-4 h-4 text-hotel-emerald" /> {t('amenities.subtitle')}
           </div>
           <h2 className="text-3xl sm:text-5xl font-serif text-hotel-emerald-dark font-normal mb-4">
-            Resort Amenities & VIP Privileges
+            {t('amenities.title')}
           </h2>
           <p className="text-gray-600 text-sm font-light leading-relaxed">
-            Every moment at Equalirio is designed for deep relaxation, refined dining, and seamless travel luxury.
+            {t('amenities.desc')}
           </p>
         </div>
 
@@ -67,7 +69,7 @@ export default function Amenities({ onOpenInquiry }) {
 
               <div className="absolute bottom-0 inset-x-0 p-8 sm:p-10 text-white">
                 <span className="text-xs uppercase tracking-widest text-hotel-gold font-bold mb-2 block">
-                  Featured Experience
+                  {t('amenities.subtitle')}
                 </span>
                 <h3 className="font-serif text-3xl sm:text-4xl font-normal text-white mb-3">
                   {selectedAmenity.title}
@@ -80,7 +82,7 @@ export default function Amenities({ onOpenInquiry }) {
                   onClick={() => onOpenInquiry(selectedAmenity.title)}
                   className="inline-flex items-center gap-2 bg-hotel-gold hover:bg-hotel-gold-light text-hotel-emerald-dark font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-full shadow-gold transition-all"
                 >
-                  <span>Reserve Experience</span>
+                  <span>{t('amenities.inquireBtn')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>

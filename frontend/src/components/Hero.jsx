@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HOTEL_INFO } from '../data/hotelData';
 import { Calendar, Users, Sparkles, Star, MapPin, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function Hero({ onSearchBooking }) {
+  const { t } = useTranslation();
   const [checkIn, setCheckIn] = useState('2026-09-10');
   const [checkOut, setCheckOut] = useState('2026-09-15');
   const [guests, setGuests] = useState('2 Guests');
@@ -43,7 +45,7 @@ export default function Hero({ onSearchBooking }) {
         <div className="inline-flex items-center gap-2 bg-hotel-emerald/80 border border-hotel-gold/40 px-4 py-1.5 rounded-full backdrop-blur-md mb-6 animate-fade-in">
           <Star className="w-4 h-4 text-hotel-gold fill-hotel-gold" />
           <span className="text-xs uppercase tracking-widest text-hotel-gold-light font-medium">
-            World’s Best Eco Luxury Hotel 2026
+            {t('hero.badge')}
           </span>
           <span className="w-1 h-1 rounded-full bg-hotel-gold"></span>
           <span className="text-xs text-white/90 font-mono">{HOTEL_INFO.rating} ⭐ ({HOTEL_INFO.reviewCount} Reviews)</span>
@@ -55,11 +57,11 @@ export default function Hero({ onSearchBooking }) {
         </h1>
 
         <p className="text-lg sm:text-2xl font-serif italic text-hotel-gold-light max-w-2xl mb-4 font-light tracking-wide">
-          "{HOTEL_INFO.tagline}"
+          "{t('hero.title1')} {t('hero.title2')}"
         </p>
 
         <p className="text-sm sm:text-base text-gray-300 max-w-xl mb-10 leading-relaxed font-light">
-          {HOTEL_INFO.subheading}
+          {t('hero.desc')}
         </p>
 
         {/* Floating Quick Reservation Engine Box */}
@@ -69,7 +71,7 @@ export default function Hero({ onSearchBooking }) {
             {/* Check In */}
             <div className="flex flex-col text-left border-b sm:border-b-0 sm:border-r border-white/10 pb-3 sm:pb-0 sm:pr-4">
               <label className="text-[10px] uppercase tracking-widest text-hotel-gold font-semibold mb-1 flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" /> Check-In
+                <Calendar className="w-3.5 h-3.5" /> {t('hero.checkIn')}
               </label>
               <input
                 type="date"
@@ -82,7 +84,7 @@ export default function Hero({ onSearchBooking }) {
             {/* Check Out */}
             <div className="flex flex-col text-left border-b sm:border-b-0 lg:border-r border-white/10 pb-3 sm:pb-0 sm:pr-4">
               <label className="text-[10px] uppercase tracking-widest text-hotel-gold font-semibold mb-1 flex items-center gap-1.5">
-                <Calendar className="w-3.5 h-3.5" /> Check-Out
+                <Calendar className="w-3.5 h-3.5" /> {t('hero.checkOut')}
               </label>
               <input
                 type="date"
@@ -95,7 +97,7 @@ export default function Hero({ onSearchBooking }) {
             {/* Guests & Category */}
             <div className="flex flex-col text-left border-b sm:border-b-0 sm:border-r border-white/10 pb-3 sm:pb-0 sm:pr-4">
               <label className="text-[10px] uppercase tracking-widest text-hotel-gold font-semibold mb-1 flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5" /> Guests & Suite
+                <Users className="w-3.5 h-3.5" /> {t('hero.guests')}
               </label>
               <select
                 value={guests}
@@ -115,7 +117,7 @@ export default function Hero({ onSearchBooking }) {
                 type="submit"
                 className="w-full h-12 bg-gradient-to-r from-hotel-gold via-hotel-gold-light to-hotel-gold text-hotel-emerald-dark font-bold text-xs tracking-widest uppercase rounded-xl flex items-center justify-center gap-2 shadow-gold hover:opacity-95 transition-all transform hover:scale-[1.02]"
               >
-                <span>Check Suites</span>
+                <span>{t('hero.searchRooms')}</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>

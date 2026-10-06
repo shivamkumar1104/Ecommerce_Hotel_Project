@@ -1,13 +1,15 @@
 import React from 'react';
-import { HOTEL_INFO } from '../data/hotelData';
-import { Leaf, Award, Compass, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Leaf, Award, Compass, CheckCircle2 } from 'lucide-react';
 
 export default function About() {
+  const { t } = useTranslation();
+
   const stats = [
-    { label: 'Guest Rating', value: '4.98 / 5', sub: 'World Travel Awards 2026' },
-    { label: 'Eco Footprint', value: '100% Solar', sub: 'Zero Single-Use Plastics' },
-    { label: 'Private Butler', value: '24 / 7', sub: 'Dedicated Personal Service' },
-    { label: 'Sanctuary Area', value: '50 Acres', sub: 'Private Lagoon & Beach' },
+    { label: t('about.stat1Label'), value: t('about.stat1Number'), sub: 'Eco Reserve' },
+    { label: t('about.stat2Label'), value: t('about.stat2Number'), sub: 'Sanctuary Coast' },
+    { label: t('about.stat3Label'), value: t('about.stat3Number'), sub: 'Carbon Neutral' },
+    { label: t('about.stat4Label'), value: t('about.stat4Number'), sub: 'Culinary Masters' },
   ];
 
   const highlights = [
@@ -29,19 +31,19 @@ export default function About() {
             
             <div className="inline-flex items-center gap-2 text-hotel-gold-dark font-mono text-xs uppercase tracking-[0.25em] mb-3">
               <Leaf className="w-4 h-4 text-hotel-emerald" />
-              <span>The Equalirio Philosophy</span>
+              <span>{t('about.subtitle')}</span>
             </div>
 
             <h2 className="text-3xl sm:text-5xl font-serif text-hotel-emerald-dark font-normal leading-tight mb-6">
-              A Harmony of Luxury & Unspoiled Nature
+              {t('about.title')}
             </h2>
 
             <p className="text-gray-700 text-base leading-relaxed mb-6 font-light">
-              Equalirio was conceived as a sanctuary where modern architectural elegance exists in perfect equilibrium with pristine natural biodiversity. Perched between lush emerald jungle slopes and azure ocean waters, our resort offers an intimate escape from the noise of the modern world.
+              {t('about.p1')}
             </p>
 
             <p className="text-gray-600 text-sm leading-relaxed mb-8 font-light">
-              Every detail—from the orientation of your private infinity pool to catch sunset rays, to the organic botanical aromatherapy in your bathroom—has been meticulously designed for total sensory rejuvenation.
+              {t('about.p2')}
             </p>
 
             {/* Checklist */}
@@ -60,7 +62,7 @@ export default function About() {
                 className="inline-flex items-center gap-2 bg-hotel-emerald text-white px-7 py-3.5 rounded-full text-xs uppercase tracking-widest font-semibold hover:bg-hotel-emerald-light transition-all shadow-luxury"
               >
                 <Compass className="w-4 h-4 text-hotel-gold" />
-                <span>Explore Accommodations</span>
+                <span>{t('nav.suites')}</span>
               </a>
               <div className="hidden sm:flex flex-col border-l border-gray-300 pl-4">
                 <span className="font-serif text-xl text-hotel-emerald font-bold">Alexandre Vane</span>

@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { GALLERY_DATA } from '../data/hotelData';
 import { Camera, Maximize2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Gallery() {
+  const { t } = useTranslation();
   const [activeCategory, setActiveCategory] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
-  const categories = ['All', 'Architecture', 'Suites', 'Wellness', 'Dining'];
+  const categories = [
+    { key: 'All', label: t('gallery.all') },
+    { key: 'Architecture', label: t('gallery.architecture') },
+    { key: 'Suites', label: t('gallery.villas') },
+    { key: 'Wellness', label: t('gallery.wellness') },
+    { key: 'Dining', label: t('gallery.gastronomy') }
+  ];
 
   const filteredGallery = activeCategory === 'All'
     ? GALLERY_DATA
@@ -36,10 +44,10 @@ export default function Gallery() {
         
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 text-hotel-gold-dark text-xs uppercase tracking-[0.3em] font-medium mb-2">
-            <Camera className="w-4 h-4 text-hotel-emerald" /> Visual Moments
+            <Camera className="w-4 h-4 text-hotel-emerald" /> {t('gallery.subtitle')}
           </div>
           <h2 className="text-3xl sm:text-5xl font-serif text-hotel-emerald-dark font-normal mb-4">
-            The Equalirio Lookbook
+            {t('gallery.title')}
           </h2>
           <p className="text-gray-600 text-sm font-light leading-relaxed">
             Immerse yourself in our architectural symmetry, pristine overwater suites, and natural sanctuary surroundings.
@@ -50,15 +58,15 @@ export default function Gallery() {
         <div className="flex justify-center items-center gap-2 sm:gap-4 mb-12 flex-wrap">
           {categories.map((cat) => (
             <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
               className={`px-5 py-2 rounded-full text-xs uppercase tracking-widest font-semibold transition-all ${
-                activeCategory === cat
+                activeCategory === cat.key
                   ? 'bg-hotel-emerald text-white shadow-luxury'
                   : 'bg-white text-gray-600 hover:text-hotel-emerald border border-gray-200'
               }`}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </div>
@@ -99,43 +107,43 @@ export default function Gallery() {
         >
           <button
             onClick={handleCloseLightbox}
-            className="absolute top-6 right-6 z-50 text-white/70 hover:text-white p-2 rounded-full bg-white/10"
+            className="absolute top-6 right-6 text-white hover:text-hotel-gold p-2 transition-colors z-50"
           >
-            <X className="w-6 h-6" />
+            <X className="w-8 h-8" />
           </button>
 
           <button
             onClick={handlePrev}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 text-white/70 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            className="absolute left-6 text-white hover:text-hotel-gold p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all z-50"
           >
-            <ChevronLeft className="w-8 h-8" />
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={handleNext}
+            className="absolute right-6 text-white hover:text-hotel-gold p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all z-50"
+          >
+            <ChevronRight className="w-6 h-6" />
           </button>
 
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-5xl max-h-[85vh] rounded-2xl overflow-hidden border border-hotel-gold/30 shadow-2xl"
+            className="max-w-4xl max-h-[85vh] flex flex-col items-center"
           >
             <img
               src={filteredGallery[lightboxIndex].image}
               alt={filteredGallery[lightboxIndex].title}
-              className="max-w-full max-h-[80vh] object-contain mx-auto"
+              className="max-w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20"
             />
-            <div className="bg-hotel-emerald-dark p-4 text-center">
-              <span className="text-[10px] uppercase tracking-widest text-hotel-gold block">
+            <div className="mt-4 text-center text-white">
+              <span className="text-xs uppercase tracking-widest text-hotel-gold block">
                 {filteredGallery[lightboxIndex].category}
               </span>
-              <h4 className="font-serif text-xl text-white font-normal">
+              <h3 className="font-serif text-2xl font-normal">
                 {filteredGallery[lightboxIndex].title}
-              </h4>
+              </h3>
             </div>
           </div>
-
-          <button
-            onClick={handleNext}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 text-white/70 hover:text-white p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
         </div>
       )}
     </section>
