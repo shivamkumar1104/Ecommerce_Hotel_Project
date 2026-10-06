@@ -268,8 +268,8 @@ export default function Navbar({ onOpenBooking, currency, setCurrency, user, onO
               </a>
             ))}
 
-            {/* <div className="pt-4 flex flex-col gap-3">
-              <div className="flex items-center justify-between text-xs text-gray-400">
+            <div className="pt-4 flex flex-col gap-3">
+              {/* <div className="flex items-center justify-between text-xs text-gray-400">
                 <span>Select Currency:</span>
                 <div className="flex gap-2">
                   {currencies.map((c) => (
